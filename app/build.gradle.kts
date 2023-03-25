@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.ApplicationDefaultConfig
 
 plugins {
     id("com.android.application")
@@ -22,12 +23,20 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
     }
 
     buildTypes {
+
+        getByName("debug") {
+            isDebuggable = true
+            buildConfigField("String", "BASE_URL", config("baseUrl"))
+        }
         getByName("release") {
-            isMinifyEnabled  = false
+            isDebuggable = false
+            isMinifyEnabled = false
             proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
+            buildConfigField("String", "BASE_URL", config("baseUrl"))
         }
     }
     compileOptions {
@@ -39,7 +48,7 @@ android {
 
     }
     buildFeatures {
-        compose =  true
+        compose = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -75,7 +84,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.3.3")
     debugImplementation("androidx.compose.ui:ui-tooling:1.3.3")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.3.3")
-    implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
 
     //project dependencies
@@ -91,3 +100,5 @@ dependencies {
 
 
 }
+
+fun config(k: String) = "${project.properties[k]}"

@@ -9,14 +9,9 @@ class AppItemMock : PreviewParameterProvider<AppDataResult> {
     private val item = AppDataResult(
         title = "google play App",
         icon = "https://play-lh.googleusercontent.com/y3wnXLnPTdDgG67kUNNbLjp_ggJkrAJ_44L79W57HLU04ANbMtoU34G9nDjyLJxnAEk",
-        developer = Developer("test dev 2")
-    )
-    private val item2 = AppDataResult(
-        title = "google play App 2",
-        icon = "https://play-lh.googleusercontent.com/y3wnXLnPTdDgG67kUNNbLjp_ggJkrAJ_44L79W57HLU04ANbMtoU34G9nDjyLJxnAEk",
-        developer = Developer("test dev")
+        developer = Developer(devId = "test dev 2")
     )
 
     override val values: Sequence<AppDataResult>
-        get() = listOf(item, item2).asSequence()
+        get() = listOf(item).asSequence()
 }

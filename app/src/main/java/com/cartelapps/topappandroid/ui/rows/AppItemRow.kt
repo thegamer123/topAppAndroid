@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -28,7 +29,7 @@ fun AppItemRow(
             .fillMaxWidth()
     ) {
 
-        val (asyncImage, column) = createRefs()
+        val (asyncImage, box) = createRefs()
 
         AsyncImage(
             model = appData.icon,
@@ -43,34 +44,31 @@ fun AppItemRow(
                 }
         )
 
-        Column(
+        BoxWithConstraints(
             modifier = Modifier
-                .width(0.dp)
-                .height(0.dp)
-                .constrainAs(column) {
-                    top.linkTo(parent.top)
-                    end.linkTo(parent.end)
-                    bottom.linkTo(parent.bottom)
-                    absoluteRight.linkTo(parent.absoluteRight)
-                },
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+                .constrainAs(box) {
+                    top.linkTo(asyncImage.top)
+                    absoluteLeft.linkTo(asyncImage.absoluteRight)
+                }
         ) {
-            Text(
-                text = appData.title.orEmpty(),
-                color = Black,
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-            )
-            Text(
-                text = appData.developer?.devId.orEmpty(),
-                color = Black,
-                fontSize = 16.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-            )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = appData.title.orEmpty(),
+                    color = Black,
+                    fontSize = 18.sp,
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.padding(start = 4.dp)
+                )
+                Text(
+                    text = appData.developer?.devId.orEmpty(),
+                    color = Black,
+                    fontSize = 16.sp,
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.padding(start = 4.dp)
+                )
+            }
         }
     }
 }
