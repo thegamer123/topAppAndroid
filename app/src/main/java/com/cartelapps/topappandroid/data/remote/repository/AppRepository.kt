@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flowOn
 class AppRepository(private val apiService: ApiService) {
 
     suspend fun getAppsList(): Flow<AppsDataModel> = flow {
-        val r = apiService.getAllApps()
+        val r = apiService.getAllApps(num = 30)
         emit(r)
     }.flowOn(Dispatchers.IO)
 }

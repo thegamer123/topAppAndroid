@@ -9,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import com.cartelapps.topappandroid.ui.screens.appListScreen.AppsListScreen
+import com.cartelapps.topappandroid.ui.screens.appListScreen.MainScreen
 import com.cartelapps.topappandroid.ui.theme.TopAppAndroidTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize().statusBarsPadding(),
                     color = MaterialTheme.colors.background
                 ) {
-                    AppsListScreen("Android")
+                    MainScreen()
                 }
             }
         }

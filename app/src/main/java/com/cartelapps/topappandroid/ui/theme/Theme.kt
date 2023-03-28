@@ -5,17 +5,18 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
+    primary = primaryOrange,
     primaryVariant = Purple700,
-    secondary = Teal200
+    secondary = secondaryGrey
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = primaryOrange,
+    primaryVariant = variantOrange,
+    secondary = secondaryGrey
 
     /* Other default colors to override
     background = Color.White,
@@ -37,7 +38,7 @@ fun TopAppAndroidTheme(
 //    } else {
 //        LightColorPalette
 //    }
-
+    val systemUiController = rememberSystemUiController()
     val colors = LightColorPalette
 
     MaterialTheme(
@@ -46,4 +47,10 @@ fun TopAppAndroidTheme(
         shapes = Shapes,
         content = content
     )
+
+    systemUiController.setSystemBarsColor(
+        color = primaryOrange
+    )
+
+
 }

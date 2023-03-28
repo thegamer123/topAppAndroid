@@ -7,6 +7,8 @@ import com.cartelapps.topappandroid.data.remote.ApiState
 import com.cartelapps.topappandroid.data.remote.repository.AppRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,14 +19,20 @@ class AppsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val myAppsList: MutableStateFlow<ApiState> = MutableStateFlow(ApiState.Empty)
-    fun getAppsList() = viewModelScope.launch {
-        myAppsList.value = ApiState.Loading
+    private val _uiState: MutableStateFlow<ApiState> = MutableStateFlow(ApiState.Empty)
+    val uiState: StateFlow<ApiState> = _uiState.asStateFlow()
+
+    init {
+        getAppsList()
+    }
+
+    private fun getAppsList() = viewModelScope.launch {
+        _uiState.value = ApiState.Loading
         repository.getAppsList()
             .catch { e ->
-                myAppsList.value = ApiState.Failure(e)
+                _uiState.value = ApiState.Failure(e)
             }.collect { data ->
-                myAppsList.value = ApiState.Success(data)
+                _uiState.value = ApiState.Success(data)
             }
     }
 

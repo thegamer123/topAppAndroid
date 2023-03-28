@@ -85,6 +85,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling:1.3.3")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.3.3")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
 
 
     //project dependencies
@@ -97,7 +98,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("io.coil-kt:coil-compose:2.2.2")
-
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 
 }
 
