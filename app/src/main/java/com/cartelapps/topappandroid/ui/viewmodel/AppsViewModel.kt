@@ -26,14 +26,15 @@ class AppsViewModel @Inject constructor(
         getAppsList()
     }
 
-    private fun getAppsList() = viewModelScope.launch {
+    fun getAppsList(countryCode: String = "de") = viewModelScope.launch {
         _uiState.value = ApiState.Loading
-        repository.getAppsList()
+        repository.getAppsList(countryCode)
             .catch { e ->
                 _uiState.value = ApiState.Failure(e)
             }.collect { data ->
                 _uiState.value = ApiState.Success(data)
             }
     }
+
 
 }

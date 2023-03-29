@@ -100,6 +100,10 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.2.2")
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 
+    implementation ("androidx.compose.material:material-icons-extended:1.4.0")
+
+    implementation ("com.github.togisoft:jetpack_compose_country_code_picker:1.1.4")
+
 }
 
 fun config(k: String) = "${project.properties[k]}"

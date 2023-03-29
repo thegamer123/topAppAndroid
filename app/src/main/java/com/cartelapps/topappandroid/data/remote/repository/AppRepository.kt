@@ -9,8 +9,11 @@ import kotlinx.coroutines.flow.flowOn
 
 class AppRepository(private val apiService: ApiService) {
 
-    suspend fun getAppsList(): Flow<AppsDataModel> = flow {
-        val r = apiService.getAllApps(num = 30)
+    suspend fun getAppsList(countryCode: String): Flow<AppsDataModel> = flow {
+        val r = apiService.getAllApps(
+            num = 50,
+            countryCode = countryCode
+        )
         emit(r)
     }.flowOn(Dispatchers.IO)
 }

@@ -8,5 +8,8 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("apps")
-    suspend fun getAllApps(@Query("num") num: Int): AppsDataModel
+    suspend fun getAllApps(
+        @Query("num") num: Int,
+        @Query("country") countryCode: String
+    ): AppsDataModel
 }
