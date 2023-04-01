@@ -88,16 +88,22 @@ fun AppItemRow(
                             modifier = Modifier.padding(start = 4.dp)
                         )
                     }
+
+
                     Box {
-                        Text(
-                            text = appData.developer?.devId.orEmpty(),
-                            color = Black,
-                            fontSize = 14.sp,
-                            textAlign = TextAlign.Left,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.padding(start = 4.dp)
-                        )
+                        Row {
+                            Text(
+                                text = appData.developer?.devId.orEmpty(),
+                                color = Black,
+                                fontSize = 14.sp,
+                                textAlign = TextAlign.Left,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier.padding(start = 4.dp)
+                            )
+
+                        }
+
                     }
                 }
             }

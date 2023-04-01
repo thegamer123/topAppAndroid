@@ -23,12 +23,32 @@ class AppsViewModel @Inject constructor(
     val uiState: StateFlow<ApiState> = _uiState.asStateFlow()
 
     init {
-        getAppsList()
+        getAppsListDiscountGames()
     }
 
     fun getAppsList(countryCode: String = "de") = viewModelScope.launch {
         _uiState.value = ApiState.Loading
         repository.getAppsList(countryCode)
+            .catch { e ->
+                _uiState.value = ApiState.Failure(e)
+            }.collect { data ->
+                _uiState.value = ApiState.Success(data)
+            }
+    }
+
+    fun getAppsListDiscountApps(countryCode: String = "de") = viewModelScope.launch {
+        _uiState.value = ApiState.Loading
+        repository.getAppsListDiscountApps(countryCode)
+            .catch { e ->
+                _uiState.value = ApiState.Failure(e)
+            }.collect { data ->
+                _uiState.value = ApiState.Success(data)
+            }
+    }
+
+    fun getAppsListDiscountGames(countryCode: String = "de") = viewModelScope.launch {
+        _uiState.value = ApiState.Loading
+        repository.getAppsListDiscountGames(countryCode)
             .catch { e ->
                 _uiState.value = ApiState.Failure(e)
             }.collect { data ->

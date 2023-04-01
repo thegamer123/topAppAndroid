@@ -10,6 +10,9 @@ interface ApiService {
     @GET("apps")
     suspend fun getAllApps(
         @Query("num") num: Int,
-        @Query("country") countryCode: String
+        @Query("country") countryCode: String,
+        @Query("collection") collection: String = "",
+        @Query("category") category: String = "",
     ): AppsDataModel
+
 }

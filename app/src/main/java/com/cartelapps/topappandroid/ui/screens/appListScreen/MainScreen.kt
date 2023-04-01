@@ -40,7 +40,7 @@ fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
                     countryList = getLibCountries,
                     onSelected = { country ->
                         isOpenDialog = false
-                        viewModel.getAppsList(country.countryCode)
+                        viewModel.getAppsListDiscountGames(country.countryCode)
                     },
                     context = LocalContext.current,
                     dialogStatus = false,
