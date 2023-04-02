@@ -8,11 +8,11 @@ plugins {
 }
 @Suppress("UnstableApiUsage")
 android {
-    namespace = "com.cartelapps.topappandroid"
+    namespace = "com.geniouscraft.topappandroid"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.cartelapps.topappandroid"
+        applicationId = "com.geniouscraft.topappandroid"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
@@ -103,6 +103,8 @@ dependencies {
     implementation ("androidx.compose.material:material-icons-extended:1.4.0")
 
     implementation ("com.github.togisoft:jetpack_compose_country_code_picker:1.1.4")
+
+    implementation ( "com.airbnb.android:lottie-compose:6.0.0")
 
 }
 
