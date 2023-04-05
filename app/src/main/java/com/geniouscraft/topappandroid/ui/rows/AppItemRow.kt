@@ -3,9 +3,11 @@ package com.geniouscraft.topappandroid.ui.rows
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
@@ -37,14 +39,20 @@ fun AppItemRow(
 ) {
     val uriHandler = LocalUriHandler.current
 
+
     ConstraintLayout(
         modifier = Modifier
-            .background(White)
-            .padding(10.dp, 20.dp, 10.dp, 20.dp)
+            .padding(
+                start = 10.dp,
+                top = 0.dp,
+                end = 10.dp,
+                bottom = 10.dp
+            )
             .fillMaxWidth()
+            .background(White, RoundedCornerShape(10.dp))
             .clickable {
                 uriHandler.openUri(appData.playstoreUrl.orEmpty())
-            }
+            },
     ) {
 
         val context = LocalContext.current
@@ -63,6 +71,7 @@ fun AppItemRow(
             contentDescription = "App logo Picture",
             modifier = Modifier
                 .width(50.dp)
+                .padding(start = 10.dp)
                 .wrapContentHeight()
                 .constrainAs(asyncImage) {
                     top.linkTo(parent.top)
