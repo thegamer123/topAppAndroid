@@ -106,6 +106,8 @@ dependencies {
 
     implementation ( "com.airbnb.android:lottie-compose:6.0.0")
 
+    implementation ("androidx.palette:palette:1.0.0")
+
 }
 
 fun config(k: String) = "${project.properties[k]}"
