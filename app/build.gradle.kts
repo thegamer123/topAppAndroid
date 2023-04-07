@@ -108,6 +108,8 @@ dependencies {
 
     implementation ("androidx.palette:palette:1.0.0")
 
+    implementation ("com.google.accompanist:accompanist-drawablepainter:0.31.0-alpha")
+
 }
 
 fun config(k: String) = "${project.properties[k]}"

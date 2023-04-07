@@ -1,21 +1,34 @@
 package com.geniouscraft.topappandroid.ui.screens.appListScreen
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.InlineTextContent
+import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.TravelExplore
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.PlaceholderVerticalAlign
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.geniouscraft.topappandroid.ui.theme.White
 import com.geniouscraft.topappandroid.ui.viewmodel.AppsViewModel
 import com.geniouscraft.topappandroid.R
 import com.geniouscraft.topappandroid.ui.theme.Black
+import com.geniouscraft.topappandroid.ui.theme.quickSand
+import com.geniouscraft.topappandroid.utils.getFlags
 import com.togitech.ccp.component.CountryDialog
 import com.togitech.ccp.data.utils.getLibCountries
 
@@ -23,6 +36,7 @@ import com.togitech.ccp.data.utils.getLibCountries
 @Composable
 fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
     var isOpenDialog by remember { mutableStateOf(false) }
+    var currentCountryCode by remember { mutableStateOf("de") }
     var isSplashFinished by remember { mutableStateOf(false) }
     SplashScreen {
         isSplashFinished = true
@@ -32,12 +46,49 @@ fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
             topBar = {
                 TopAppBar(
                     title = {
+
+                        val myId = "inlineContent"
+                        val text = buildAnnotatedString {
+                            append(stringResource(id = R.string.current_deals_label))
+                            // Append a placeholder string "[icon]" and attach an annotation "inlineContent" on it.
+                            appendInlineContent(myId, "[icon]")
+                        }
+
+                        val inlineContent = mapOf(
+                            Pair(
+                                // This tells the [CoreText] to replace the placeholder string "[icon]" by
+                                // the composable given in the [InlineTextContent] object.
+                                myId,
+                                InlineTextContent(
+                                    // Placeholder tells text layout the expected size and vertical alignment of
+                                    // children composable.
+                                    Placeholder(
+                                        width = 25.sp,
+                                        height = 25.sp,
+                                        placeholderVerticalAlign = PlaceholderVerticalAlign.AboveBaseline
+                                    )
+                                ) {
+                                    // This Icon will fill maximum size, which is specified by the [Placeholder]
+                                    // above. Notice the width and height in [Placeholder] are specified in TextUnit,
+                                    // and are converted into pixel by text layout.
+
+                                    Image(
+                                        painter = painterResource(id = R.drawable.fire),
+                                        ""
+                                    )
+                                }
+                            )
+                        )
+
+
                         Text(
-                            text = stringResource(id = R.string.current_deals_label),
+                            text = text,
                             color = Black,
-                            fontStyle = FontStyle.Italic,
-                            fontFamily = FontFamily.Monospace,
-                            fontSize = 26.sp
+                            fontStyle = FontStyle.Normal,
+                            fontFamily = quickSand,
+                            fontSize = 26.sp,
+                            fontWeight = FontWeight.Bold,
+                            inlineContent = inlineContent
                         )
                     },
                     backgroundColor = White,
@@ -45,10 +96,14 @@ fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
                         IconButton(onClick = {
                             isOpenDialog = true
                         }) {
-                            Icon(
-                                imageVector = Icons.Default.TravelExplore,
-                                tint = Black,
-                                contentDescription = null
+                            Image(
+                                modifier = Modifier
+                                    .height(25.dp)
+                                    .width(25.dp)
+                                    .clip(CircleShape),
+                                painter = painterResource(id = getFlags(currentCountryCode)),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop
                             )
                         }
                     })
@@ -62,6 +117,7 @@ fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
                         countryList = getLibCountries,
                         onSelected = { country ->
                             isOpenDialog = false
+                            currentCountryCode = country.countryCode
                             viewModel.getAppsListDiscountGames(country.countryCode)
                         },
                         context = LocalContext.current,

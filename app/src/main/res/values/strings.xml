@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">App deals</string>
 
-    <string name="current_deals_label">Current Deals</string>
+    <string name="current_deals_label">Hot Deals</string>
     <string name="original_price_label">Original price : %1$s</string>+
     <string name="deal_price_label">Deal Price : %1$s</string>
+    <string name="up_to_label">Up to\n%1$s</string>
 </resources>

@@ -10,3 +10,5 @@ val White = Color.White
 val Black = Color.Black
 val Red = Color.Red
 val secondaryGrey = Color (0xFF757575)
+
+val Green200 = Color(0xFF69F0AE)
