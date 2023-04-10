@@ -49,7 +49,7 @@ fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
 
                         val myId = "inlineContent"
                         val text = buildAnnotatedString {
-                            append(stringResource(id = R.string.current_deals_label))
+                            append(stringResource(id = R.string.current_deals_label).plus(" "))
                             // Append a placeholder string "[icon]" and attach an annotation "inlineContent" on it.
                             appendInlineContent(myId, "[icon]")
                         }
