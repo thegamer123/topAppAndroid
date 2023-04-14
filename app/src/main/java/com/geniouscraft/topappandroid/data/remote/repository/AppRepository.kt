@@ -1,5 +1,6 @@
 package com.geniouscraft.topappandroid.data.remote.repository
 
+import com.geniouscraft.topappandroid.data.Constant.Category.APPLICATION
 import com.geniouscraft.topappandroid.data.Constant.Category.GAMES
 import com.geniouscraft.topappandroid.data.Constant.Collection.TOP_FREE
 import com.geniouscraft.topappandroid.data.Constant.Collection.TOP_PAID
@@ -75,17 +76,21 @@ class AppRepository(private val apiService: ApiService) {
 
 
     suspend fun getAppsListExclusive(countryCode: String): Flow<AppsDataModel> = flow {
-        val r = apiService.getAllApps(
+
+        val apps = apiService.getAllApps(
             num = 500,
             countryCode = countryCode,
-            collection = TOP_PAID
+            collection = TOP_PAID,
+            category = APPLICATION
         )
+
+
         val filteredData: ArrayList<AppDataResult> =
-            ArrayList(r.results.filter { it.originalPrice != null && it.isHotDeal }.take(10))
+            ArrayList(apps.results.filter { it.originalPrice != null && it.isHotDeal }.take(10))
         emit(
             AppsDataModel(
                 results = filteredData,
-                next = r.next
+                next = apps.next
             )
         )
     }.flowOn(Dispatchers.IO)

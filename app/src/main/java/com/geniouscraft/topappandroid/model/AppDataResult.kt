@@ -29,5 +29,5 @@ data class AppDataResult(
         get() = "${dealRatioInt}%"
 
     val isHotDeal: Boolean
-        get() = dealRatioInt > 70
+        get() = dealRatioInt > 70 && free == false
 }

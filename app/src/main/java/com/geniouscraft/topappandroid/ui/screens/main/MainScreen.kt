@@ -1,4 +1,4 @@
-package com.geniouscraft.topappandroid.ui.screens.appList
+package com.geniouscraft.topappandroid.ui.screens.main
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -25,7 +25,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.geniouscraft.topappandroid.ui.theme.White
 import com.geniouscraft.topappandroid.ui.viewmodel.AppsViewModel
 import com.geniouscraft.topappandroid.R
-import com.geniouscraft.topappandroid.ui.screens.main.SelectionMenu
+import com.geniouscraft.topappandroid.ui.screens.appList.AppsListScreen
+import com.geniouscraft.topappandroid.ui.screens.appList.SplashScreen
 import com.geniouscraft.topappandroid.ui.theme.Black
 import com.geniouscraft.topappandroid.ui.theme.quickSand
 import com.geniouscraft.topappandroid.utils.getFlags
@@ -36,7 +37,8 @@ import com.togitech.ccp.data.utils.getLibCountries
 @Composable
 fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
     var isOpenDialog by remember { mutableStateOf(false) }
-    var currentCountryCode by remember { mutableStateOf("de") }
+    val currentCountryCode = viewModel.countryCode.collectAsState()
+
     var isSplashFinished by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
@@ -103,7 +105,7 @@ fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
                                     .height(25.dp)
                                     .width(25.dp)
                                     .clip(CircleShape),
-                                painter = painterResource(id = getFlags(currentCountryCode)),
+                                painter = painterResource(id = getFlags(currentCountryCode.value)),
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop
                             )
@@ -125,12 +127,11 @@ fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
                         countryList = getLibCountries,
                         onSelected = { country ->
                             isOpenDialog = false
-                            currentCountryCode = country.countryCode
                             viewModel.saveCountryCode(
                                 context = context,
-                                countryCode = currentCountryCode
+                                countryCode = country.countryCode
                             )
-                            viewModel.getFreeApps(context = context)
+                            viewModel.loadDataFollowMenu(context = context)
                         },
                         context = LocalContext.current,
                         dialogStatus = false,

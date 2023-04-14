@@ -32,6 +32,8 @@ fun SelectionMenu(
     var selectedPosition by remember { mutableStateOf(0) }
     val context = LocalContext.current
 
+    selectedPosition = viewModel.selectedMenu
+
     val selectedMenuItems: List<SelectionMenuItems> = listOf(
         SelectionMenuItems(
             text = stringResource(id = R.string.free_label),
@@ -77,7 +79,7 @@ fun SelectionMenu(
                     .padding(start = 10.dp, end = 10.dp)
                     .clickable {
                         selectedPosition = item.position
-
+                        viewModel.saveSelectedMenu(selectedPosition)
                         when (selectedPosition) {
                             0 -> {
                                 viewModel.getFreeApps(context)

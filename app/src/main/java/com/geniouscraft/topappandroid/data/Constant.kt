@@ -8,5 +8,6 @@ object Constant {
 
     object Category {
         const val GAMES = "GAME"
+        const val APPLICATION = "APPLICATION"
     }
 }

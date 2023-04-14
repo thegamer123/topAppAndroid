@@ -50,7 +50,7 @@ fun AppItemRow(
             .height(350.dp)
             .width(350.dp)
             .padding(start = 10.dp, end = 10.dp),
-        backgroundColor = Color.Transparent
+        backgroundColor = Color.White
     ) {
         ConstraintLayout(
             modifier = Modifier
@@ -102,7 +102,9 @@ fun AppItemRow(
             ) {
                 Text(
                     modifier = Modifier.padding(10.dp, 5.dp, 10.dp, 5.dp),
-                    text = stringResource(R.string.up_to_label, appData.dealRatioPercentage),
+                    text = if (appData.free == true)
+                        stringResource(R.string.free_label) else
+                        stringResource(R.string.up_to_label, appData.dealRatioPercentage),
                     color = Black,
                     fontSize = 16.sp,
                     textAlign = TextAlign.Center,

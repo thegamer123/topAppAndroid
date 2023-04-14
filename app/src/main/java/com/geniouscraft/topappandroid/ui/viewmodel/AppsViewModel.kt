@@ -2,12 +2,12 @@ package com.geniouscraft.topappandroid.ui.viewmodel
 
 import android.app.Application
 import android.content.Context
+import android.graphics.Bitmap
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.geniouscraft.topappandroid.R
 import com.geniouscraft.topappandroid.data.remote.ApiState
 import com.geniouscraft.topappandroid.data.remote.repository.AppRepository
 import com.geniouscraft.topappandroid.ui.screens.main.countryCodeKey
@@ -24,6 +24,21 @@ class AppsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : AndroidViewModel(application) {
 
+    companion object {
+        private const val SELECTED_MENU_KEY = "SELECTED_MENU_KEY"
+    }
+
+    private val _countryCode: MutableStateFlow<String> =
+        MutableStateFlow("de")
+    val countryCode: StateFlow<String> = _countryCode.asStateFlow()
+
+    val selectedMenu: Int
+        get() = savedStateHandle[SELECTED_MENU_KEY] ?: 0
+
+    fun saveSelectedMenu(selectedMenuPosition: Int) {
+        savedStateHandle[SELECTED_MENU_KEY] = selectedMenuPosition
+    }
+
     private val _uiState: MutableStateFlow<ApiState> = MutableStateFlow(ApiState.Empty)
     val uiState: StateFlow<ApiState> = _uiState.asStateFlow()
 
@@ -32,6 +47,7 @@ class AppsViewModel @Inject constructor(
     }
 
     fun getAppsList(countryCode: String = "de") = viewModelScope.launch {
+        _countryCode.value = countryCode
         _uiState.value = ApiState.Loading
         repository.getAppsList(countryCode)
             .catch { e ->
@@ -48,13 +64,13 @@ class AppsViewModel @Inject constructor(
                 // No type safety.
                 preferences[countryCodeKey] ?: "de"
             }
-
         countryCode.collectLatest { code ->
             _uiState.value = ApiState.Loading
             repository.getAppsListDiscountApps(code)
                 .catch { e ->
                     _uiState.value = ApiState.Failure(e)
                 }.collect { data ->
+                    _countryCode.value = code
                     _uiState.value = ApiState.Success(data)
                 }
 
@@ -75,6 +91,7 @@ class AppsViewModel @Inject constructor(
                 .catch { e ->
                     _uiState.value = ApiState.Failure(e)
                 }.collect { data ->
+                    _countryCode.value = code
                     _uiState.value = ApiState.Success(data)
                 }
         }
@@ -94,6 +111,7 @@ class AppsViewModel @Inject constructor(
                 .catch { e ->
                     _uiState.value = ApiState.Failure(e)
                 }.collect { data ->
+                    _countryCode.value = code
                     _uiState.value = ApiState.Success(data)
                 }
         }
@@ -110,7 +128,6 @@ class AppsViewModel @Inject constructor(
 
 
     fun getFreeApps(context: Context) = viewModelScope.launch {
-
         val countryCode: Flow<String> = context.dataStore.data
             .map { preferences ->
                 // No type safety.
@@ -123,10 +140,28 @@ class AppsViewModel @Inject constructor(
                 .catch { e ->
                     _uiState.value = ApiState.Failure(e)
                 }.collect { data ->
+                    _countryCode.value = code
                     _uiState.value = ApiState.Success(data)
                 }
         }
 
+    }
+
+    fun loadDataFollowMenu(context: Context){
+        when (selectedMenu) {
+            0 -> {
+                getFreeApps(context)
+            }
+            1 -> {
+                getExclusiveList(context)
+            }
+            2 -> {
+                getAppsListDiscountGames(context)
+            }
+            else -> {
+                getAppsListDiscountApps(context)
+            }
+        }
     }
 
 
