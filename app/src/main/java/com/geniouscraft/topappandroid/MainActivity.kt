@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import com.geniouscraft.topappandroid.ui.screens.appListScreen.MainScreen
-import com.geniouscraft.topappandroid.ui.screens.appListScreen.SplashScreen
+import com.geniouscraft.topappandroid.ui.screens.appList.MainScreen
 import com.geniouscraft.topappandroid.ui.theme.TopAppAndroidTheme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,4 +1,4 @@
-package com.geniouscraft.topappandroid.ui.screens.appListScreen
+package com.geniouscraft.topappandroid.ui.screens.appList
 
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility

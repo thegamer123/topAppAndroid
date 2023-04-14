@@ -5,4 +5,10 @@
     <string name="original_price_label">Original price : %1$s</string>+
     <string name="deal_price_label">Deal Price : %1$s</string>
     <string name="up_to_label">Up to\n%1$s</string>
+
+    <!--Selection menu-->
+    <string name="free_label">Free</string>
+    <string name="exclusive_label">Exclusive</string>
+    <string name="games_label">Games</string>
+    <string name="apps_label">Apps</string>
 </resources>

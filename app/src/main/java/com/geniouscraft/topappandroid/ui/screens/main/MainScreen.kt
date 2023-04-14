@@ -1,9 +1,8 @@
-package com.geniouscraft.topappandroid.ui.screens.appListScreen
+package com.geniouscraft.topappandroid.ui.screens.appList
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
@@ -26,6 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.geniouscraft.topappandroid.ui.theme.White
 import com.geniouscraft.topappandroid.ui.viewmodel.AppsViewModel
 import com.geniouscraft.topappandroid.R
+import com.geniouscraft.topappandroid.ui.screens.main.SelectionMenu
 import com.geniouscraft.topappandroid.ui.theme.Black
 import com.geniouscraft.topappandroid.ui.theme.quickSand
 import com.geniouscraft.topappandroid.utils.getFlags
@@ -38,6 +38,8 @@ fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
     var isOpenDialog by remember { mutableStateOf(false) }
     var currentCountryCode by remember { mutableStateOf("de") }
     var isSplashFinished by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
     SplashScreen {
         isSplashFinished = true
     }
@@ -110,7 +112,13 @@ fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
             },
             content = {
 
-                AppsListScreen()
+                Column(
+                    modifier = Modifier.padding(top = 10.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    SelectionMenu()
+                    AppsListScreen()
+                }
                 if (isOpenDialog)
                     CountryDialog(
                         modifier = Modifier,
@@ -118,7 +126,11 @@ fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
                         onSelected = { country ->
                             isOpenDialog = false
                             currentCountryCode = country.countryCode
-                            viewModel.getAppsListDiscountGames(country.countryCode)
+                            viewModel.saveCountryCode(
+                                context = context,
+                                countryCode = currentCountryCode
+                            )
+                            viewModel.getFreeApps(context = context)
                         },
                         context = LocalContext.current,
                         dialogStatus = false,

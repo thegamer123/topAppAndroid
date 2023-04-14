@@ -110,6 +110,10 @@ dependencies {
 
     implementation ("com.google.accompanist:accompanist-drawablepainter:0.31.0-alpha")
 
+    implementation("com.android.billingclient:billing-ktx:5.2.0")
+
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
 }
 
 fun config(k: String) = "${project.properties[k]}"
