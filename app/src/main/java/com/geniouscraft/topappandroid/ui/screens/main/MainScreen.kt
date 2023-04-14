@@ -131,6 +131,7 @@ fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
                                 context = context,
                                 countryCode = country.countryCode
                             )
+                            viewModel.saveSelectedMenu(0)
                             viewModel.loadDataFollowMenu(context = context)
                         },
                         context = LocalContext.current,

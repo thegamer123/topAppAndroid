@@ -2,12 +2,10 @@ package com.geniouscraft.topappandroid.ui.viewmodel
 
 import android.app.Application
 import android.content.Context
-import android.graphics.Bitmap
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.geniouscraft.topappandroid.R
 import com.geniouscraft.topappandroid.data.remote.ApiState
 import com.geniouscraft.topappandroid.data.remote.repository.AppRepository
 import com.geniouscraft.topappandroid.ui.screens.main.countryCodeKey
