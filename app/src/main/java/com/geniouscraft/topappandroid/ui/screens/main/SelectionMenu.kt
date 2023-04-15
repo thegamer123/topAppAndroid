@@ -29,10 +29,9 @@ fun SelectionMenu(
     viewModel: AppsViewModel = hiltViewModel()
 ) {
 
-    var selectedPosition by remember { mutableStateOf(0) }
+    var selectedPosition  = viewModel.selectedMenu.collectAsState().value
     val context = LocalContext.current
 
-    selectedPosition = viewModel.selectedMenu
 
     val selectedMenuItems: List<SelectionMenuItems> = listOf(
         SelectionMenuItems(
@@ -79,7 +78,7 @@ fun SelectionMenu(
                     .padding(start = 10.dp, end = 10.dp)
                     .clickable {
                         selectedPosition = item.position
-                        viewModel.saveSelectedMenu(selectedPosition)
+                        viewModel.updateMenuPosition(selectedPosition)
                         when (selectedPosition) {
                             0 -> {
                                 viewModel.getFreeApps(context)

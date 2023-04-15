@@ -22,37 +22,19 @@ class AppsViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : AndroidViewModel(application) {
 
-    companion object {
-        private const val SELECTED_MENU_KEY = "SELECTED_MENU_KEY"
-    }
 
     private val _countryCode: MutableStateFlow<String> =
         MutableStateFlow("de")
     val countryCode: StateFlow<String> = _countryCode.asStateFlow()
 
-    val selectedMenu: Int
-        get() = savedStateHandle[SELECTED_MENU_KEY] ?: 0
-
-    fun saveSelectedMenu(selectedMenuPosition: Int) {
-        savedStateHandle[SELECTED_MENU_KEY] = selectedMenuPosition
-    }
+    private val _selectedMenu: MutableStateFlow<Int> = MutableStateFlow(0)
+    val selectedMenu: StateFlow<Int> = _selectedMenu.asStateFlow()
 
     private val _uiState: MutableStateFlow<ApiState> = MutableStateFlow(ApiState.Empty)
     val uiState: StateFlow<ApiState> = _uiState.asStateFlow()
 
     init {
         getFreeApps(application.baseContext)
-    }
-
-    fun getAppsList(countryCode: String = "de") = viewModelScope.launch {
-        _countryCode.value = countryCode
-        _uiState.value = ApiState.Loading
-        repository.getAppsList(countryCode)
-            .catch { e ->
-                _uiState.value = ApiState.Failure(e)
-            }.collect { data ->
-                _uiState.value = ApiState.Success(data)
-            }
     }
 
     fun getAppsListDiscountApps(context: Context) = viewModelScope.launch {
@@ -73,6 +55,10 @@ class AppsViewModel @Inject constructor(
                 }
 
         }
+    }
+
+    fun updateMenuPosition(menuPosition:Int){
+        _selectedMenu.value = menuPosition
     }
 
     fun getAppsListDiscountGames(context: Context) = viewModelScope.launch {
@@ -143,23 +129,6 @@ class AppsViewModel @Inject constructor(
                 }
         }
 
-    }
-
-    fun loadDataFollowMenu(context: Context){
-        when (selectedMenu) {
-            0 -> {
-                getFreeApps(context)
-            }
-            1 -> {
-                getExclusiveList(context)
-            }
-            2 -> {
-                getAppsListDiscountGames(context)
-            }
-            else -> {
-                getAppsListDiscountApps(context)
-            }
-        }
     }
 
 
