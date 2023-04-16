@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "48953988098",
+    "project_id": "apps-hot-deals",
+    "storage_bucket": "apps-hot-deals.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48953988098:android:cd5c89617ffadb284e431b",
+        "android_client_info": {
+          "package_name": "com.geniouscraft.topappandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48953988098-4qqmmugb6n0plj4ifnppas51fof15a04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEs8hGa3Bi9O0BkazpEHQkrSeT1rzgFrk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48953988098-4qqmmugb6n0plj4ifnppas51fof15a04.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

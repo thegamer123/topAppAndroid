@@ -25,32 +25,31 @@ fun AppsListScreen(
 ) {
 
     val uiState = remember { viewModel.uiState }
+    val apiState = uiState.collectAsState().value
 
-    when (val apiState = uiState.collectAsState().value) {
-        is ApiState.Loading -> {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxSize()
-            ) {
-                CircularProgressIndicator()
-            }
+
+    if (apiState is ApiState.Loading) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator()
         }
-        is ApiState.Success -> {
-            val dataList = apiState.data as AppsDataModel
-            // UI
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(1F)
-                    .verticalScroll(rememberScrollState())
+    }
 
-            ) {
-                dataList.results.forEach { item ->
-                    AppItemRow(appData = item)
-                }
+    if (apiState is ApiState.Success) {
+        val dataList: AppsDataModel? =
+            remember { (apiState as? ApiState.Success)?.data as? AppsDataModel }
+        // UI
+        Column(
+            modifier = Modifier
+                .fillMaxSize(1F)
+                .verticalScroll(rememberScrollState())
+
+        ) {
+            dataList?.results?.forEach { item ->
+                AppItemRow(appData = item)
             }
-        }
-        else -> {
-
         }
     }
 }

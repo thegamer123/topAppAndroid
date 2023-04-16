@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
     kotlin("kapt")
 }
 @Suppress("UnstableApiUsage")
@@ -87,6 +88,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
 
+    implementation (platform("com.google.firebase:firebase-bom:31.5.0"))
 
     //project dependencies
 
