@@ -29,31 +29,31 @@ fun SelectionMenu(
     viewModel: AppsViewModel = hiltViewModel()
 ) {
 
-    var selectedPosition  = viewModel.selectedMenu.collectAsState().value
+    var selectedPosition = viewModel.selectedMenu.collectAsState().value
     val context = LocalContext.current
 
 
     val selectedMenuItems: List<SelectionMenuItems> = listOf(
         SelectionMenuItems(
-            text = stringResource(id = R.string.free_label),
+            text = stringResource(id = R.string.games_label),
             position = 0,
             isSelected = selectedPosition == 0
         ),
         SelectionMenuItems(
-            text = stringResource(id = R.string.exclusive_label),
+            text = stringResource(id = R.string.apps_label),
             position = 1,
             isSelected = selectedPosition == 1
         ),
         SelectionMenuItems(
-            text = stringResource(id = R.string.games_label),
+            text = stringResource(id = R.string.exclusive_label),
             position = 2,
             isSelected = selectedPosition == 2
         ),
         SelectionMenuItems(
-            text = stringResource(id = R.string.apps_label),
+            text = stringResource(id = R.string.free_label),
             position = 3,
             isSelected = selectedPosition == 3
-        )
+        ),
     )
 
     Row(
@@ -79,14 +79,14 @@ fun SelectionMenu(
                     .clickable {
                         selectedPosition = item.position
                         viewModel.updateMenuPosition(selectedPosition)
-                        when (selectedPosition) {
-                            0 -> {
+                        when (item.text) {
+                            context.getString(R.string.free_label) -> {
                                 viewModel.getFreeApps(context)
                             }
-                            1 -> {
+                            context.getString(R.string.exclusive_label) -> {
                                 viewModel.getExclusiveList(context)
                             }
-                            2 -> {
+                            context.getString(R.string.games_label) -> {
                                 viewModel.getAppsListDiscountGames(context)
                             }
                             else -> {

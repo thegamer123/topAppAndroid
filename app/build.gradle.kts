@@ -73,22 +73,22 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.0")
-    implementation("androidx.activity:activity-compose:1.6.1")
-    implementation("androidx.compose.ui:ui:1.3.3")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.3.3")
-    implementation("androidx.compose.material:material:1.3.1")
+    implementation("androidx.core:core-ktx:1.10.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation("androidx.activity:activity-compose:1.7.0")
+    implementation("androidx.compose.ui:ui:1.4.1")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.4.1")
+    implementation("androidx.compose.material:material:1.4.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.3.3")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.3.3")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.3.3")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.4.1")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.4.1")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.4.1")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
-    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
-    implementation (platform("com.google.firebase:firebase-bom:31.5.0"))
+    implementation(platform("com.google.firebase:firebase-bom:31.5.0"))
 
     //project dependencies
 
@@ -100,17 +100,17 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("io.coil-kt:coil-compose:2.2.2")
-    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 
-    implementation ("androidx.compose.material:material-icons-extended:1.4.0")
+    implementation("androidx.compose.material:material-icons-extended:1.4.0")
 
-    implementation ("com.github.togisoft:jetpack_compose_country_code_picker:1.1.4")
+    implementation("com.github.togisoft:jetpack_compose_country_code_picker:1.1.4")
 
-    implementation ( "com.airbnb.android:lottie-compose:6.0.0")
+    implementation("com.airbnb.android:lottie-compose:6.0.0")
 
-    implementation ("androidx.palette:palette:1.0.0")
+    implementation("androidx.palette:palette:1.0.0")
 
-    implementation ("com.google.accompanist:accompanist-drawablepainter:0.31.0-alpha")
+    implementation("com.google.accompanist:accompanist-drawablepainter:0.31.0-alpha")
 
     implementation("com.android.billingclient:billing-ktx:5.2.0")
 
