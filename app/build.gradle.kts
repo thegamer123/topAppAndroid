@@ -116,6 +116,8 @@ dependencies {
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
+    implementation ("com.google.android.gms:play-services-ads:22.0.0")
+
 }
 
 fun config(k: String) = "${project.properties[k]}"

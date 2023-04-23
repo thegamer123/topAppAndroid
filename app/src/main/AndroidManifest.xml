@@ -15,6 +15,10 @@
         android:theme="@style/Theme.TopAppAndroid"
         tools:targetApi="31">
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-1774916643365686~4866219188"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

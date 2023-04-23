@@ -1,5 +1,6 @@
 package com.geniouscraft.topappandroid.ui.screens.appList
 
+import NativeAdItem
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,12 +12,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.geniouscraft.topappandroid.data.remote.ApiState
+import com.geniouscraft.topappandroid.model.AppDataResult
 import com.geniouscraft.topappandroid.model.AppsDataModel
 import com.geniouscraft.topappandroid.ui.rows.AppItemRow
+import com.geniouscraft.topappandroid.ui.screens.appList.ads.BannerAdView
 import com.geniouscraft.topappandroid.ui.viewmodel.AppsViewModel
+import com.google.android.gms.ads.AdSize
 
 
 @Composable
@@ -26,7 +31,6 @@ fun AppsListScreen(
 
     val uiState = remember { viewModel.uiState }
     val apiState = uiState.collectAsState().value
-
 
     if (apiState is ApiState.Loading) {
         Box(
@@ -47,8 +51,14 @@ fun AppsListScreen(
                 .verticalScroll(rememberScrollState())
 
         ) {
-            dataList?.results?.forEach { item ->
+            BannerAdView(true, AdSize.BANNER)
+            dataList?.results?.forEachIndexed { index, item ->
                 AppItemRow(appData = item)
+                if (index % 2 == 0) {
+                    BannerAdView(true, AdSize.MEDIUM_RECTANGLE)
+                } else {
+                    NativeAdItem(true)
+                }
             }
         }
     }

@@ -2,14 +2,23 @@ package com.geniouscraft.topappandroid.ui.viewmodel
 
 import android.app.Application
 import android.content.Context
+import androidx.compose.ui.res.stringResource
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.geniouscraft.topappandroid.R
 import com.geniouscraft.topappandroid.data.remote.ApiState
 import com.geniouscraft.topappandroid.data.remote.repository.AppRepository
+import com.geniouscraft.topappandroid.model.AppsDataModel
 import com.geniouscraft.topappandroid.ui.screens.main.countryCodeKey
 import com.geniouscraft.topappandroid.ui.screens.main.dataStore
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdOptions
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -34,7 +43,7 @@ class AppsViewModel @Inject constructor(
     val uiState: StateFlow<ApiState> = _uiState.asStateFlow()
 
     init {
-        getFreeApps(application.baseContext)
+        getAppsListDiscountGames(application.baseContext)
     }
 
     fun getAppsListDiscountApps(context: Context) = viewModelScope.launch {
@@ -57,7 +66,7 @@ class AppsViewModel @Inject constructor(
         }
     }
 
-    fun updateMenuPosition(menuPosition:Int){
+    fun updateMenuPosition(menuPosition: Int) {
         _selectedMenu.value = menuPosition
     }
 
@@ -130,6 +139,7 @@ class AppsViewModel @Inject constructor(
         }
 
     }
+
 
 
 }

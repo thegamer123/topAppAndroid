@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import com.android.billingclient.api.*
 import com.geniouscraft.topappandroid.ui.screens.main.MainScreen
 import com.geniouscraft.topappandroid.ui.theme.TopAppAndroidTheme
+import com.google.android.gms.ads.MobileAds
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,7 +28,7 @@ class MainActivity : ComponentActivity() {
 
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
 
-                    billingClient.queryProductDetailsAsync(queryProductDetailsParams) { billingResult, productDetailsList ->
+                    billingClient.queryProductDetailsAsync(queryProductDetailsParams) { _, productDetailsList ->
                         // check billingResult
                         // process returned productDetailsList
                         val productDetailsParamsList = productDetailsList.map { item ->
@@ -36,12 +37,7 @@ class MainActivity : ComponentActivity() {
                                 .setProductDetails(item)
                                 // to get an offer token, call ProductDetails.subscriptionOfferDetails()
                                 // for a list of offers that are available to the user
-                                .setOfferToken(
-                                    if (item.productType == BillingClient.ProductType.SUBS)
-                                        item.subscriptionOfferDetails.toString()
-                                    else
-                                        item.oneTimePurchaseOfferDetails.toString()
-                                )
+                                .setOfferToken( item.subscriptionOfferDetails.toString())
                                 .build()
                         }
 
@@ -79,10 +75,6 @@ class MainActivity : ComponentActivity() {
                     QueryProductDetailsParams.Product.newBuilder()
                         .setProductId("product_id_sub")
                         .setProductType(BillingClient.ProductType.SUBS)
-                        .build(),
-                    QueryProductDetailsParams.Product.newBuilder()
-                        .setProductId("product_id_one_time")
-                        .setProductType(BillingClient.ProductType.INAPP)
                         .build()
                 )
             )
@@ -104,7 +96,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
+        MobileAds.initialize(this) {}
         billingClient.startConnection(billingListener)
     }
 }
