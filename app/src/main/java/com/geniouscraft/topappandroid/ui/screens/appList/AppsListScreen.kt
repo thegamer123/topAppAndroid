@@ -1,5 +1,6 @@
 package com.geniouscraft.topappandroid.ui.screens.appList
 
+import BottomSheetLayout
 import NativeAdItem
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,8 +17,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.geniouscraft.topappandroid.data.remote.ApiState
-import com.geniouscraft.topappandroid.model.AppDataResult
-import com.geniouscraft.topappandroid.model.AppsDataModel
+import com.geniouscraft.topappandroid.utils.model.AppDataResult
+import com.geniouscraft.topappandroid.utils.model.AppsDataModel
 import com.geniouscraft.topappandroid.ui.rows.AppItemRow
 import com.geniouscraft.topappandroid.ui.screens.appList.ads.BannerAdView
 import com.geniouscraft.topappandroid.ui.viewmodel.AppsViewModel

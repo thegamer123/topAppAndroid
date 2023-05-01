@@ -1,8 +1,8 @@
 package com.geniouscraft.topappandroid.ui.rows
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.geniouscraft.topappandroid.model.AppDataResult
-import com.geniouscraft.topappandroid.model.Developer
+import com.geniouscraft.topappandroid.utils.model.AppDataResult
+import com.geniouscraft.topappandroid.utils.model.Developer
 
 class AppItemMock : PreviewParameterProvider<AppDataResult> {
 

@@ -1,6 +1,6 @@
 package com.geniouscraft.topappandroid.data.remote
 
-import com.geniouscraft.topappandroid.model.AppsDataModel
+import com.geniouscraft.topappandroid.utils.model.AppsDataModel
 import retrofit2.http.GET
 import retrofit2.http.Query
 

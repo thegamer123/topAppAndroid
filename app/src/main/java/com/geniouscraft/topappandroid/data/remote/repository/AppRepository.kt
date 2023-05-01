@@ -5,8 +5,8 @@ import com.geniouscraft.topappandroid.data.Constant.Category.GAMES
 import com.geniouscraft.topappandroid.data.Constant.Collection.TOP_FREE
 import com.geniouscraft.topappandroid.data.Constant.Collection.TOP_PAID
 import com.geniouscraft.topappandroid.data.remote.ApiService
-import com.geniouscraft.topappandroid.model.AppDataResult
-import com.geniouscraft.topappandroid.model.AppsDataModel
+import com.geniouscraft.topappandroid.utils.model.AppDataResult
+import com.geniouscraft.topappandroid.utils.model.AppsDataModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

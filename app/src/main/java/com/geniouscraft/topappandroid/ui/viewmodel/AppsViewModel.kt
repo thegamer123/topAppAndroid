@@ -2,23 +2,16 @@ package com.geniouscraft.topappandroid.ui.viewmodel
 
 import android.app.Application
 import android.content.Context
-import androidx.compose.ui.res.stringResource
+import android.util.Log
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.geniouscraft.topappandroid.R
+import com.android.billingclient.api.*
 import com.geniouscraft.topappandroid.data.remote.ApiState
 import com.geniouscraft.topappandroid.data.remote.repository.AppRepository
-import com.geniouscraft.topappandroid.model.AppsDataModel
 import com.geniouscraft.topappandroid.ui.screens.main.countryCodeKey
 import com.geniouscraft.topappandroid.ui.screens.main.dataStore
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdLoader
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.gms.ads.nativead.NativeAdOptions
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -42,8 +35,18 @@ class AppsViewModel @Inject constructor(
     private val _uiState: MutableStateFlow<ApiState> = MutableStateFlow(ApiState.Empty)
     val uiState: StateFlow<ApiState> = _uiState.asStateFlow()
 
+    private val _productsState: MutableStateFlow<List<ProductDetails?>> =
+        MutableStateFlow(emptyList())
+    val productsState: StateFlow<List<ProductDetails?>> = _productsState.asStateFlow()
+
+    var billingClient: BillingClient? = null
+
     init {
         getAppsListDiscountGames(application.baseContext)
+        billingClient = BillingClient.newBuilder(application.baseContext)
+            .setListener(purchasesUpdatedListener)
+            .enablePendingPurchases()
+            .build()
     }
 
     fun getAppsListDiscountApps(context: Context) = viewModelScope.launch {
@@ -140,6 +143,88 @@ class AppsViewModel @Inject constructor(
 
     }
 
+    var isPremium: Boolean
+        get() = savedStateHandle.getStateFlow("isPremium", false).value
+        set(value) {
+            savedStateHandle["isPremium"] = value
+        }
 
+
+    private val purchasesUpdatedListener: PurchasesUpdatedListener
+        get() = PurchasesUpdatedListener { billingResult, purchases ->
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
+                for (purchase in purchases) {
+                    verifySubPurchase(purchase)
+                }
+            }
+        }
+
+    fun establishConnection() {
+        billingClient?.startConnection(object : BillingClientStateListener {
+            override fun onBillingSetupFinished(billingResult: BillingResult) {
+                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                    // The BillingClient is ready. You can query purchases here.
+                    showProducts()
+                }
+            }
+
+            override fun onBillingServiceDisconnected() {
+                // Try to restart the connection on the next request to
+                // Google Play by calling the startConnection() method.
+                establishConnection()
+            }
+        })
+    }
+
+    fun showProducts() {
+        val productList =
+            listOf( //Product 1
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId("one_week_sub")
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build(),  //Product 2
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId("one_month_sub")
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build(),  //Product 3
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId("one_year_sub")
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build()
+            )
+        val params = QueryProductDetailsParams.newBuilder()
+            .setProductList(productList)
+            .build()
+        billingClient?.queryProductDetailsAsync(
+            params
+        ) { billingResult: BillingResult?,
+            prodDetailsList: List<ProductDetails?>? ->
+            // Process the result
+            //ShowBottomSheet
+            Log.d("dsfsdf", "dfsdfsdf")
+        }
+    }
+
+
+    fun verifySubPurchase(purchases: Purchase) {
+        val acknowledgePurchaseParams = AcknowledgePurchaseParams
+            .newBuilder()
+            .setPurchaseToken(purchases.purchaseToken)
+            .build()
+        billingClient?.acknowledgePurchase(
+            acknowledgePurchaseParams
+        ) { billingResult: BillingResult ->
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                //user prefs to set premium
+                //Setting premium to 1
+                // 1 - premium
+                // 0 - no premium
+                isPremium = true
+            }
+        }
+        Log.d("MAIN_ACTIVITY", "Purchase Token: " + purchases.purchaseToken)
+        Log.d("MAIN_ACTIVITY", "Purchase Time: " + purchases.purchaseTime)
+        Log.d("MAIN_ACTIVITY", "Purchase OrderID: " + purchases.orderId)
+    }
 
 }

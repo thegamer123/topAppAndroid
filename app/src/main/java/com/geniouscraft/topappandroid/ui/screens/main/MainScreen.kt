@@ -1,5 +1,6 @@
 package com.geniouscraft.topappandroid.ui.screens.main
 
+import BottomSheetLayout
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -110,6 +111,20 @@ fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
                                 contentScale = ContentScale.Crop
                             )
                         }
+
+                        IconButton(onClick = {
+                            viewModel.showProducts()
+                        }) {
+                            Image(
+                                modifier = Modifier
+                                    .height(25.dp)
+                                    .width(25.dp)
+                                    .clip(CircleShape),
+                                painter = painterResource(id = R.drawable.ad_block),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop
+                            )
+                        }
                     })
             },
             content = {
@@ -140,6 +155,8 @@ fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
                             isOpenDialog = false
                         }
                     )
+
+                BottomSheetLayout()
             }
         )
     }

@@ -1,4 +1,4 @@
-package com.geniouscraft.topappandroid.model
+package com.geniouscraft.topappandroid.utils.model
 
 import com.google.gson.annotations.SerializedName
 

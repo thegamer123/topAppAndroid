@@ -3,6 +3,7 @@ package com.geniouscraft.topappandroid
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
@@ -11,75 +12,16 @@ import androidx.compose.ui.Modifier
 import com.android.billingclient.api.*
 import com.geniouscraft.topappandroid.ui.screens.main.MainScreen
 import com.geniouscraft.topappandroid.ui.theme.TopAppAndroidTheme
+import com.geniouscraft.topappandroid.ui.viewmodel.AppsViewModel
 import com.google.android.gms.ads.MobileAds
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val billingListener: BillingClientStateListener
-        get() = object : BillingClientStateListener {
-            override fun onBillingServiceDisconnected() {
-                billingClient.startConnection(billingListener)
-            }
 
-            override fun onBillingSetupFinished(billingResult: BillingResult) {
-
-
-                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-
-                    billingClient.queryProductDetailsAsync(queryProductDetailsParams) { _, productDetailsList ->
-                        // check billingResult
-                        // process returned productDetailsList
-                        val productDetailsParamsList = productDetailsList.map { item ->
-                            BillingFlowParams.ProductDetailsParams.newBuilder()
-                                // retrieve a value for "productDetails" by calling queryProductDetailsAsync()
-                                .setProductDetails(item)
-                                // to get an offer token, call ProductDetails.subscriptionOfferDetails()
-                                // for a list of offers that are available to the user
-                                .setOfferToken( item.subscriptionOfferDetails.toString())
-                                .build()
-                        }
-
-
-                        val billingFlowParams = BillingFlowParams.newBuilder()
-                            .setProductDetailsParamsList(productDetailsParamsList)
-                            .build()
-
-                        // Launch the billing flow
-                        val billingResult =
-                            billingClient.launchBillingFlow(this@MainActivity, billingFlowParams)
-                    }
-
-                }
-            }
-
-        }
-
-    private val purchasesUpdatedListener: PurchasesUpdatedListener
-        get() = PurchasesUpdatedListener { billingResult, purchases ->
-            // To be implemented in a later section.
-        }
-
-    private val billingClient: BillingClient
-        get() = BillingClient.newBuilder(this.baseContext)
-            .setListener(purchasesUpdatedListener)
-            .enablePendingPurchases()
-            .build()
-
-
-    private val queryProductDetailsParams =
-        QueryProductDetailsParams.newBuilder()
-            .setProductList(
-                listOf(
-                    QueryProductDetailsParams.Product.newBuilder()
-                        .setProductId("product_id_sub")
-                        .setProductType(BillingClient.ProductType.SUBS)
-                        .build()
-                )
-            )
-            .build()
-
+    private val viewModel: AppsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,6 +39,25 @@ class MainActivity : ComponentActivity() {
             }
         }
         MobileAds.initialize(this) {}
-        billingClient.startConnection(billingListener)
+        viewModel.establishConnection()
     }
+
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.billingClient?.queryPurchasesAsync(
+            QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS).build()
+        ) { billingResult: BillingResult, list: List<Purchase> ->
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                for (purchase in list) {
+                    if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED && !purchase.isAcknowledged) {
+                        viewModel.verifySubPurchase(purchase)
+                    }
+                }
+            }
+        }
+    }
+
+
 }

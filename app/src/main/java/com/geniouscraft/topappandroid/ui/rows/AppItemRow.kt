@@ -30,7 +30,7 @@ import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.geniouscraft.topappandroid.R
-import com.geniouscraft.topappandroid.model.AppDataResult
+import com.geniouscraft.topappandroid.utils.model.AppDataResult
 import com.geniouscraft.topappandroid.ui.theme.*
 import java.util.*
 
