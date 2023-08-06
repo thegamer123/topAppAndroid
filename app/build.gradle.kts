@@ -16,8 +16,8 @@ android {
         applicationId = "com.geniouscraft.topappandroid"
         minSdk = 24
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -73,18 +73,20 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.10.0")
+    kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")
+
+    implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.activity:activity-compose:1.7.0")
-    implementation("androidx.compose.ui:ui:1.4.1")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.4.1")
-    implementation("androidx.compose.material:material:1.4.1")
+    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation("androidx.compose.ui:ui:1.4.3")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.4.3")
+    implementation("androidx.compose.material:material:1.4.3")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.4.1")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.4.1")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.4.1")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.4.3")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.4.3")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.4.3")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
@@ -96,13 +98,13 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2") // for cache
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
-    implementation("io.coil-kt:coil-compose:2.2.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    implementation("com.google.dagger:hilt-android:2.47")
+    kapt("com.google.dagger:hilt-android-compiler:2.47")
+    implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 
-    implementation("androidx.compose.material:material-icons-extended:1.4.0")
+    implementation("androidx.compose.material:material-icons-extended:1.4.3")
 
     implementation("com.github.togisoft:jetpack_compose_country_code_picker:1.1.4")
 
@@ -112,11 +114,11 @@ dependencies {
 
     implementation("com.google.accompanist:accompanist-drawablepainter:0.31.0-alpha")
 
-    implementation("com.android.billingclient:billing-ktx:5.2.0")
+    implementation("com.android.billingclient:billing-ktx:6.0.1")
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
-    implementation ("com.google.android.gms:play-services-ads:22.0.0")
+    implementation("com.google.android.gms:play-services-ads:22.2.0")
 
 }
 

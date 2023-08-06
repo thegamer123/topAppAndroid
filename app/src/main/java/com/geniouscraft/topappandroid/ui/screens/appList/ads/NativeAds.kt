@@ -1,11 +1,9 @@
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -25,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.geniouscraft.topappandroid.BuildConfig
 import com.geniouscraft.topappandroid.R
 import com.geniouscraft.topappandroid.ui.theme.Black
 import com.geniouscraft.topappandroid.ui.theme.Red
@@ -37,9 +36,7 @@ import com.google.android.gms.ads.nativead.NativeAdView
 import java.util.*
 
 @Composable
-fun NativeAdItem(
-    isTest: Boolean
-) {
+fun NativeAdItem() {
     val paddingModifier = Modifier.padding(10.dp)
     val context = LocalContext.current
 
@@ -54,7 +51,7 @@ fun NativeAdItem(
         .build()
 
     val unitId =
-        if (isTest) context.getString(R.string.test_native_ad_id) else context.getString(
+        if (BuildConfig.DEBUG) context.getString(R.string.test_native_ad_id) else context.getString(
             R.string.native_ad_id
         )
 

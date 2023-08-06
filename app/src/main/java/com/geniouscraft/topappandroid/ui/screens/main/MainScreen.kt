@@ -2,6 +2,7 @@ package com.geniouscraft.topappandroid.ui.screens.main
 
 import BottomSheetLayout
 import android.annotation.SuppressLint
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -113,7 +114,7 @@ fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
                         }
 
                         IconButton(onClick = {
-                            viewModel.showProducts()
+                            viewModel.showInAppPurchase(context as Activity)
                         }) {
                             Image(
                                 modifier = Modifier

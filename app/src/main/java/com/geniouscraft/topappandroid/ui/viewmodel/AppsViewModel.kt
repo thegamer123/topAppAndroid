@@ -1,5 +1,6 @@
 package com.geniouscraft.topappandroid.ui.viewmodel
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.util.Log
@@ -40,6 +41,8 @@ class AppsViewModel @Inject constructor(
     val productsState: StateFlow<List<ProductDetails?>> = _productsState.asStateFlow()
 
     var billingClient: BillingClient? = null
+
+    private var productDetails : List<ProductDetails?>? = emptyList()
 
     init {
         getAppsListDiscountGames(application.baseContext)
@@ -176,33 +179,50 @@ class AppsViewModel @Inject constructor(
         })
     }
 
-    fun showProducts() {
+    private fun showProducts() {
         val productList =
             listOf( //Product 1
-                QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId("one_week_sub")
-                    .setProductType(BillingClient.ProductType.SUBS)
-                    .build(),  //Product 2
+//                QueryProductDetailsParams.Product.newBuilder()
+//                    .setProductId("one_week_sub")
+//                    .setProductType(BillingClient.ProductType.SUBS)
+//                    .build(),  //Product 2
                 QueryProductDetailsParams.Product.newBuilder()
                     .setProductId("one_month_sub")
                     .setProductType(BillingClient.ProductType.SUBS)
                     .build(),  //Product 3
-                QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId("one_year_sub")
-                    .setProductType(BillingClient.ProductType.SUBS)
-                    .build()
+//                QueryProductDetailsParams.Product.newBuilder()
+//                    .setProductId("one_year_sub")
+//                    .setProductType(BillingClient.ProductType.SUBS)
+//                    .build()
             )
         val params = QueryProductDetailsParams.newBuilder()
             .setProductList(productList)
             .build()
         billingClient?.queryProductDetailsAsync(
             params
-        ) { billingResult: BillingResult?,
-            prodDetailsList: List<ProductDetails?>? ->
-            // Process the result
-            //ShowBottomSheet
-            Log.d("dsfsdf", "dfsdfsdf")
+        ) { _: BillingResult?,
+            resultProductDetails: List<ProductDetails?>? ->
+           productDetails = resultProductDetails
         }
+    }
+
+    fun showInAppPurchase(activity : Activity){
+        val oneMonthPremium : ProductDetails = productDetails?.last() ?: return
+        val offerToken : String = oneMonthPremium.subscriptionOfferDetails?.first()?.offerToken ?: return
+        val productDetailsParamsList = listOf(
+            BillingFlowParams.ProductDetailsParams.newBuilder()
+                // retrieve a value for "productDetails" by calling queryProductDetailsAsync()
+                .setProductDetails(oneMonthPremium)
+                // to get an offer token, call ProductDetails.subscriptionOfferDetails()
+                // for a list of offers that are available to the user
+                .setOfferToken(offerToken)
+                .build()
+        )
+        val billingFlowParams = BillingFlowParams.newBuilder()
+            .setProductDetailsParamsList(productDetailsParamsList)
+            .build()
+
+        billingClient?.launchBillingFlow(activity, billingFlowParams)
     }
 
 
