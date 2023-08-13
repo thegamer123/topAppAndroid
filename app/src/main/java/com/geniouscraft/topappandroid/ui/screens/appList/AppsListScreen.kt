@@ -52,10 +52,12 @@ fun AppsListScreen(
             BannerAdView(AdSize.BANNER)
             dataList?.results?.forEachIndexed { index, item ->
                 AppItemRow(appData = item)
-                if (index % 2 == 0) {
-                    BannerAdView(AdSize.MEDIUM_RECTANGLE)
-                } else {
-                    NativeAdItem()
+                if (!viewModel.isPremium) {
+                    if (index % 2 == 0) {
+                        BannerAdView(AdSize.MEDIUM_RECTANGLE)
+                    } else {
+                        NativeAdItem()
+                    }
                 }
             }
         }

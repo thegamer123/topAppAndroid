@@ -42,7 +42,7 @@ class AppsViewModel @Inject constructor(
 
     var billingClient: BillingClient? = null
 
-    private var productDetails : List<ProductDetails?>? = emptyList()
+    private var productDetails: List<ProductDetails?>? = emptyList()
 
     init {
         getAppsListDiscountGames(application.baseContext)
@@ -181,7 +181,8 @@ class AppsViewModel @Inject constructor(
 
     private fun showProducts() {
         val productList =
-            listOf( //Product 1
+            listOf(
+                //Product 1
 //                QueryProductDetailsParams.Product.newBuilder()
 //                    .setProductId("one_week_sub")
 //                    .setProductType(BillingClient.ProductType.SUBS)
@@ -202,13 +203,14 @@ class AppsViewModel @Inject constructor(
             params
         ) { _: BillingResult?,
             resultProductDetails: List<ProductDetails?>? ->
-           productDetails = resultProductDetails
+            productDetails = resultProductDetails
         }
     }
 
-    fun showInAppPurchase(activity : Activity){
-        val oneMonthPremium : ProductDetails = productDetails?.last() ?: return
-        val offerToken : String = oneMonthPremium.subscriptionOfferDetails?.first()?.offerToken ?: return
+    fun showInAppPurchase(activity: Activity) {
+        val oneMonthPremium: ProductDetails = productDetails?.last() ?: return
+        val offerToken: String =
+            oneMonthPremium.subscriptionOfferDetails?.first()?.offerToken ?: return
         val productDetailsParamsList = listOf(
             BillingFlowParams.ProductDetailsParams.newBuilder()
                 // retrieve a value for "productDetails" by calling queryProductDetailsAsync()
@@ -234,13 +236,11 @@ class AppsViewModel @Inject constructor(
         billingClient?.acknowledgePurchase(
             acknowledgePurchaseParams
         ) { billingResult: BillingResult ->
-            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                //user prefs to set premium
-                //Setting premium to 1
-                // 1 - premium
-                // 0 - no premium
-                isPremium = true
-            }
+            //user prefs to set premium
+            //Setting premium to 1
+            // 1 - premium
+            // 0 - no premium
+            isPremium = billingResult.responseCode == BillingClient.BillingResponseCode.OK
         }
         Log.d("MAIN_ACTIVITY", "Purchase Token: " + purchases.purchaseToken)
         Log.d("MAIN_ACTIVITY", "Purchase Time: " + purchases.purchaseTime)
