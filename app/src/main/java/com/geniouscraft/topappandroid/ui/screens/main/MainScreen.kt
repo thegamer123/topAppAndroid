@@ -113,21 +113,22 @@ fun MainScreen(viewModel: AppsViewModel = hiltViewModel()) {
                             )
                         }
 
-                        if (!viewModel.isPremium) {
-                            IconButton(onClick = {
-                                viewModel.showInAppPurchase(context as Activity)
-                            }) {
-                                Image(
-                                    modifier = Modifier
-                                        .height(25.dp)
-                                        .width(25.dp)
-                                        .clip(CircleShape),
-                                    painter = painterResource(id = R.drawable.ad_block),
-                                    contentDescription = null,
-                                    contentScale = ContentScale.Crop
-                                )
-                            }
-                        }
+//                        if (!viewModel.isPremium) {
+//                            IconButton(onClick = {
+//                                viewModel.showInAppPurchase(context as Activity)
+//                            }) {
+//                                Image(
+//                                    modifier = Modifier
+//                                        .height(25.dp)
+//                                        .width(25.dp)
+//                                        .clip(CircleShape),
+//                                    painter = painterResource(id = R.drawable.ad_block),
+//                                    contentDescription = null,
+//                                    contentScale = ContentScale.Crop,
+//
+//                                )
+//                            }
+//                        }
                     })
             },
             content = {
