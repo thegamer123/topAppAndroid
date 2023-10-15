@@ -16,7 +16,7 @@ android {
         applicationId = "com.geniouscraft.topappandroid"
         minSdk = 24
         targetSdk = 33
-        versionCode = 4
+        versionCode = 7
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -25,6 +25,15 @@ android {
             useSupportLibrary = true
         }
 
+    }
+
+    signingConfigs {
+        create("release") {
+            keyAlias = "key0"
+            keyPassword = "Start123#"
+            storeFile = file("D:\\cartelApps\\TopAppAndroid\\app\\key.jks")
+            storePassword = "Start123#"
+        }
     }
 
     buildTypes {
@@ -38,6 +47,7 @@ android {
             isMinifyEnabled = false
             proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
             buildConfigField("String", "BASE_URL", config("baseUrl"))
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
