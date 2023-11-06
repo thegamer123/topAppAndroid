@@ -10,12 +10,12 @@ plugins {
 @Suppress("UnstableApiUsage")
 android {
     namespace = "com.geniouscraft.topappandroid"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.geniouscraft.topappandroid"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 7
         versionName = "1.0"
 
@@ -85,20 +85,20 @@ dependencies {
 
     kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")
 
-    implementation("androidx.core:core-ktx:1.10.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.activity:activity-compose:1.7.2")
-    implementation("androidx.compose.ui:ui:1.4.3")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.4.3")
-    implementation("androidx.compose.material:material:1.4.3")
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.activity:activity-compose:1.8.0")
+    implementation("androidx.compose.ui:ui:1.5.4")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.5.4")
+    implementation("androidx.compose.material:material:1.5.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.4.3")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.4.3")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.4.3")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.4")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.5.4")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.4")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
     implementation(platform("com.google.firebase:firebase-bom:31.5.0"))
 
@@ -114,13 +114,13 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 
-    implementation("androidx.compose.material:material-icons-extended:1.4.3")
+    implementation("androidx.compose.material:material-icons-extended:1.5.4")
 
     implementation("com.github.togisoft:jetpack_compose_country_code_picker:1.1.4")
 
     implementation("com.airbnb.android:lottie-compose:6.0.0")
 
-    implementation("androidx.palette:palette:1.0.0")
+    implementation("androidx.palette:palette-ktx:1.0.0")
 
     implementation("com.google.accompanist:accompanist-drawablepainter:0.31.0-alpha")
 
@@ -128,7 +128,7 @@ dependencies {
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
-    implementation("com.google.android.gms:play-services-ads:22.2.0")
+    implementation("com.google.android.gms:play-services-ads:22.5.0")
 
 }
 
