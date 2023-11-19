@@ -46,18 +46,23 @@ fun AppsListScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize(1F)
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
-            BannerAdView(AdSize.BANNER)
+            //BannerAdView(AdSize.BANNER)
             dataList?.results?.forEachIndexed { index, item ->
                 AppItemRow(appData = item)
                 if (!viewModel.isPremium) {
                     if (index % 2 == 0) {
-                        BannerAdView(AdSize.MEDIUM_RECTANGLE)
-                    } else {
                         NativeAdItem()
                     }
+
+//                    if (index % 2 == 0) {
+//                        BannerAdView(AdSize.MEDIUM_RECTANGLE)
+//                    } else {
+//                        NativeAdItem()
+//                    }
                 }
             }
         }
